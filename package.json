@@ -1,0 +1,25 @@
+{
+  "name": "algodecomer",
+  "private": true,
+  "packageManager": "pnpm@10.18.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @algodecomer/api --filter @algodecomer/web dev",
+    "dev:api": "pnpm --filter @algodecomer/api dev",
+    "dev:web": "pnpm --filter @algodecomer/web dev",
+    "db:ensure": "bash scripts/ensure-local-db.sh",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:setup": "pnpm db:migrate && pnpm db:seed",
+    "db:migrate": "pnpm --filter @algodecomer/api db:migrate",
+    "db:seed": "pnpm --filter @algodecomer/api db:seed",
+    "db:generate": "pnpm --filter @algodecomer/api db:generate",
+    "db:backup": "bash scripts/backup-db.sh",
+    "db:restore": "bash scripts/restore-db.sh",
+    "db:verify-restore": "bash scripts/verify-restore.sh",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm --filter @algodecomer/api test"
+  }
+}

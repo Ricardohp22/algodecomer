@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.local
+*.log
+coverage/
+.turbo/
+.pnpm-store/
+.backups/
+*.tsbuildinfo
+.vite/
+
+# Documentos de negocio locales. El README del repositorio sí se versiona.
+especificacion_maestra_plataforma_gastronomica.md
+diseno_tecnico_fase_1_plataforma_gastronomica.md
