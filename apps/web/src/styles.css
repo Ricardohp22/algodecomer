@@ -22,10 +22,230 @@ body {
 }
 
 button,
+input,
+select,
+textarea,
+label,
 p,
 dd,
-dt {
+dt,
+a,
+legend {
   font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+h2,
+h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.25rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.92);
+}
+
+.brand {
+  color: var(--ink);
+  font-family: Georgia, "Iowan Old Style", Palatino, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.page.wide {
+  max-width: 58rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lead,
+.hint {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card {
+  margin-top: 1rem;
+  padding: 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.form,
+.stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.stack {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack.plain li,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.split {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+}
+
+label.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: #fff;
+  color: inherit;
+  font-size: 1rem;
+}
+
+label.check input {
+  width: auto;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+}
+
+legend {
+  padding: 0 0.3rem;
+}
+
+button,
+.button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--accent);
+  color: #fffdf8;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.secondary,
+.button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error,
+.notice {
+  color: var(--danger);
+}
+
+dl {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1rem;
+}
+
+dl div {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 0.75rem;
+}
+
+dt {
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 0.7rem;
+}
+
+@media (min-width: 720px) {
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 button:focus-visible,

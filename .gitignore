@@ -10,6 +10,7 @@ coverage/
 .backups/
 *.tsbuildinfo
 .vite/
+data/
 
 # Documentos de negocio locales. El README del repositorio sí se versiona.
 especificacion_maestra_plataforma_gastronomica.md

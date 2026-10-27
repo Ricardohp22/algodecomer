@@ -1,4 +1,5 @@
 import { config as loadEnv } from 'dotenv'
+import { tmpdir } from 'node:os'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
@@ -34,6 +35,13 @@ const envSchema = z.object({
   MINIO_ACCESS_KEY: z.string().min(1).default('minio'),
   MINIO_SECRET_KEY: z.string().min(1).default('minio12345'),
   MINIO_BUCKET: z.string().min(1).default('algodecomer'),
+  COOKIE_SECRET: z.string().min(16).default('dev-only-cookie-secret'),
+  OTP_PEPPER: z.string().min(16).default('dev-only-otp-pepper-01'),
+  MEDIA_SIGNING_SECRET: z.string().min(16).default('dev-only-media-secret'),
+  UPLOAD_DIR: z.string().optional(),
+  GOOGLE_CLIENT_ID: z.string().default(''),
+  GOOGLE_CLIENT_SECRET: z.string().default(''),
+  GOOGLE_REDIRECT_URI: z.string().default('http://localhost:3000/api/v1/auth/google/callback'),
 })
 
 const parsed = envSchema.safeParse(process.env)
@@ -45,4 +53,33 @@ if (!parsed.success) {
   throw new Error(`Variables de entorno inválidas:\n${details}`)
 }
 
-export const config = parsed.data
+const DEV_SECRETS = new Set([
+  'dev-only-cookie-secret',
+  'dev-only-otp-pepper-01',
+  'dev-only-media-secret',
+])
+
+if (parsed.data.NODE_ENV === 'production') {
+  const secrets = [parsed.data.COOKIE_SECRET, parsed.data.OTP_PEPPER, parsed.data.MEDIA_SIGNING_SECRET]
+  if (secrets.some((secret) => DEV_SECRETS.has(secret))) {
+    throw new Error('En producción hay que definir COOKIE_SECRET, OTP_PEPPER y MEDIA_SIGNING_SECRET')
+  }
+}
+
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
+
+function resolveUploadDir(value: string | undefined, nodeEnv: string) {
+  if (value) {
+    return resolve(repoRoot, value)
+  }
+  if (nodeEnv === 'test') {
+    return resolve(tmpdir(), 'algodecomer-uploads')
+  }
+  return resolve(repoRoot, 'data/uploads')
+}
+
+export const config = {
+  ...parsed.data,
+  UPLOAD_DIR: resolveUploadDir(parsed.data.UPLOAD_DIR, parsed.data.NODE_ENV),
+  googleEnabled: parsed.data.GOOGLE_CLIENT_ID.length > 0 && parsed.data.GOOGLE_CLIENT_SECRET.length > 0,
+}
